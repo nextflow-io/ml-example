@@ -27,7 +27,7 @@ jobs:
           submodules: true
 
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java_version }}
           distribution: 'temurin'
@@ -39,3 +39,11 @@ jobs:
           ./nextflow run . -profile wave
         env:
           NXF_ANSI_LOG: false
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nextflow-logs-${{ matrix.java_version }}
+          path: |
+            .nextflow.*
