@@ -36,9 +36,12 @@ jobs:
       - name: Tests
         run: |
           curl -fsSL get.nextflow.io | bash
+          export NXF_EDGE=1
+          ./nextflow -self-update
           ./nextflow run . -profile wave
         env:
           NXF_ANSI_LOG: false
+          NXF_TRACE: nextflow.processor
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
